@@ -43,25 +43,41 @@ class MainActivity : AppCompatActivity() {
 //                Log.d(TAG, "Coroutine runs on:${Thread.currentThread().name}")
 //            }
 //        }
-        //Demonstrating that run blocking affects only the main thread
-        runBlocking{
-            delay(100)
-            Log.d(TAG,"Coroutine1 runs on ${Thread.currentThread().name}")
+//        //Demonstrating that run blocking affects only the main thread
+//        runBlocking{
+//            delay(100)
+//            Log.d(TAG,"Coroutine1 runs on ${Thread.currentThread().name}")
+//
+//            launch(Dispatchers.IO){
+//                delay(1000)
+//                Log.d(TAG, "Coroutine runs on ${Thread.currentThread().name}")
+//            }
+//            launch(Dispatchers.IO){
+//                delay(1000)
+//                Log.d(TAG, "Coroutine runs on ${Thread.currentThread().name}")
+//            }
+//        }
+//    }
+//
+//    suspend fun loadImages(): String {
+//        delay(7000)
+//        return "final Destination"
+//
+//    }
+        val job = GlobalScope.launch{
+            repeat(5){
+                delay(1000)
+                Log.d(TAG,"Coroutine is running....")
+            }
 
-            launch(Dispatchers.IO){
-                delay(1000)
-                Log.d(TAG, "Coroutine runs on ${Thread.currentThread().name}")
-            }
-            launch(Dispatchers.IO){
-                delay(1000)
-                Log.d(TAG, "Coroutine runs on ${Thread.currentThread().name}")
-            }
         }
-    }
+        runBlocking {
+            // join() waits for coroutine to finish executing.
+            delay(3000)
+            job.cancel()
 
-    suspend fun loadImages(): String {
-        delay(7000)
-        return "final Destination"
+            Log.d(TAG,"Coroutine has finished running")
+        }
 
     }
 }
