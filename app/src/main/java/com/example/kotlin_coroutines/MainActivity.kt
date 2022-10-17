@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        GlobalScope.launch{
+        GlobalScope.launch {
             //Pauses the current coroutine
             delay(3000)
             Log.d(TAG, "Coroutine says hello from ${Thread.currentThread().name}")
