@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         runBlocking {
             // join() waits for coroutine to finish executing.
             delay(3000)
-            job.join()
+            job.cancel()
 
             Log.d(TAG,"Coroutine has finished running")
         }
