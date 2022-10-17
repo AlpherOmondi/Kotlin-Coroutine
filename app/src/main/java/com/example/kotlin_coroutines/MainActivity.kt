@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         runBlocking {
-            // join() waits for coroutine to finish executing.
+            //join() waits for coroutine to finish executing.
             delay(3000)
             job.cancel()
 
