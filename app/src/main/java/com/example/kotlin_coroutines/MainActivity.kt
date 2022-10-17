@@ -16,9 +16,18 @@ class MainActivity : AppCompatActivity() {
             //Pauses the current coroutine
             delay(3000)
             Log.d(TAG, "Coroutine says hello from ${Thread.currentThread().name}")
-
-
+            val networkCallAnswer = doNetworkCall()
+            val networkCallAnswer2 = doNetworkCall2()
         }
         Log.d(TAG, "Coroutine says hello from ${Thread.currentThread().name}")
+
+    }
+    suspend fun doNetworkCall():String{
+        delay(5000)
+        return "Users"
+    }
+    suspend fun doNetworkCall2():String{
+        delay(5000)
+        return "Images"
     }
 }
