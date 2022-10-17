@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import kotlinx.coroutines.*
+import org.w3c.dom.Text
+import kotlin.system.measureTimeMillis
 
 class MainActivity : AppCompatActivity() {
     val TAG = "MainActivity"
@@ -64,20 +66,44 @@ class MainActivity : AppCompatActivity() {
 //        return "final Destination"
 //
 //    }
-        val job = GlobalScope.launch{
-            repeat(5){
-                delay(1000)
-                Log.d(TAG,"Coroutine is running....")
+//        val job = GlobalScope.launch{
+//            repeat(5){
+//                delay(1000)
+//                Log.d(TAG,"Coroutine is running....")
+//            }
+//
+//        }
+//        runBlocking {
+//            //join() waits for coroutine to finish executing.
+//            delay(3000)
+//            job.cancel()
+//
+//            Log.d(TAG,"Coroutine has finished running")
+//        }
+        GlobalScope.launch(Dispatchers.IO) {
+            val firstText = findViewById<TextView>(R.id.text_1)
+            val secondText = findViewById<TextView>(R.id.text_2)
+            withContext(Dispatchers.Main) {
+                val timeTaken = measureTimeMillis {
+                    firstText.text = networkCall1()
+                    secondText.text = networkCall2()
+                }
+                Log.d(TAG,"Time taken by network is ${timeTaken}")
             }
-
         }
-        runBlocking {
-            //join() waits for coroutine to finish executing.
-            delay(3000)
-            job.cancel()
+    }
 
-            Log.d(TAG,"Coroutine has finished running")
-        }
+    suspend fun networkCall1(): String {
+        delay(6000)
+        return "Home"
+
+    }
+
+    suspend fun networkCall2(): String {
+        delay(2000)
+        return "Coming soon ..."
 
     }
 }
+
+
