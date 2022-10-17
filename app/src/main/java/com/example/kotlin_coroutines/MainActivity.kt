@@ -85,8 +85,10 @@ class MainActivity : AppCompatActivity() {
             val secondText = findViewById<TextView>(R.id.text_2)
             withContext(Dispatchers.Main) {
                 val timeTaken = measureTimeMillis {
-                    firstText.text = networkCall1()
-                    secondText.text = networkCall2()
+                    var answer1 = async{networkCall1()}
+                    var answer2 = async{ networkCall2()}
+                    firstText.text = answer1.await()
+                    secondText.text = answer2.await()
                 }
                 Log.d(TAG,"Time taken by network is ${timeTaken}")
             }
